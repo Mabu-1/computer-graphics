@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boundary Fill Algorithm</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Create a 2D array to represent the pixels
+        const pixels = new Array(width).fill().map(() => new Array(height).fill(true));
+
+        function drawPixel(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 1, 1);
+        }
+
+        function boundaryFill(x, y, fillColor, boundaryColor) {
+            if (x >= 0 && y >= 0 && x < width && y < height && pixels[x][y]) {
+                pixels[x][y] = false;
+                drawPixel(x, y, fillColor);
+
+                setTimeout(() => {
+                    boundaryFill(x + 1, y, fillColor, boundaryColor);
+                    boundaryFill(x - 1, y, fillColor, boundaryColor);
+                    boundaryFill(x, y + 1, fillColor, boundaryColor);
+                    boundaryFill(x, y - 1, fillColor, boundaryColor);
+                }, 0);
+            }
+        }
+
+        // Draw a boundary
+        ctx.strokeStyle = 'black';
+        ctx.beginPath();
+        ctx.moveTo(100, 100);
+        ctx.lineTo(300, 100);
+        ctx.lineTo(300, 300);
+        ctx.lineTo(100, 300);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Fill the area inside the boundary with red
+        boundaryFill(200, 200, 'red', 'black');
+    </script>
+</body>
+</html>

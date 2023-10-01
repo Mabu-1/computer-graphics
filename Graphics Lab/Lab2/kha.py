@@ -1,0 +1,16 @@
+import turtle
+t = turtle.Turtle()
+t.right(135)
+t.circle(-30,100)
+t.penup()
+t.goto(0,0)
+t.pendown()
+t.left(100)
+t.forward(70)
+
+t.right(-135)
+t.forward(70)
+t.left(90)
+t.forward(50)
+t.hideturtle()
+turtle.exitonclick()
